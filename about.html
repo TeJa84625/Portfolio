@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            /* Light gray background */
+            color: #333;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Header Section (from Home Page) -->                                                                                    
+    <header class="bg-white shadow-md py-4 px-6 md:px-10 lg:px-16 flex justify-between items-center rounded-b-lg">
+        <!-- Logo -->
+        <div class="flex items-center">
+            <a href="index.html"
+                class="text-2xl font-bold text-gray-800 hover:text-blue-600 transition duration-300 ease-in-out">
+                <!-- Placeholder for your logo (e.g., an SVG or text) -->
+                <span class="text-blue-600">G</span>TEJA
+            </a>
+        </div>
+        
+        <!-- Navigation Bar -->
+        <nav>
+            <ul class="flex space-x-4 md:space-x-8">
+                <li><a href="index.html"
+                        class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">Home</a>
+                </li>
+                <li><a href="projects.html"
+                        class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">Projects</a>
+                </li>
+                <li><a href="#"
+                        class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">About</a>
+                </li>
+                <li><a href="contact.html"
+                        class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="flex-grow p-6 md:p-10 lg:p-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 text-center">About <span
+                class="text-blue-600">Me</span></h1>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
+            <p class="text-lg text-gray-700 leading-relaxed">
+                I am a passionate full-stack developer with a strong foundation in modern web technologies. My expertise
+                spans across front-end development using frameworks like React, and back-end systems, often leveraging
+                the power of Firebase for robust and scalable applications. Beyond web development, I also have
+                experience in embedded systems, bringing a diverse skill set to problem-solving and innovation. I thrive
+                on building impactful solutions and continuously learning new technologies to deliver high-quality
+                products.
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed mt-4">
+                My journey in development is driven by curiosity and a desire to create intuitive and efficient user
+                experiences. I enjoy tackling complex challenges and transforming ideas into tangible, functional
+                applications.
+            </p>
+            <!-- You can add more details here, e.g., skills, experience, a profile picture, etc. -->
+            <div class="mt-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">My Skills</h2>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Firebase</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">React</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">JavaScript</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">HTML5</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">CSS3</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Node.js</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Embedded
+                        Systems</span>
+                    <!-- Add more skills as needed -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section (Optional) -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-auto rounded-t-lg">
+        <p>&copy; 2025 My Portfolio. All rights reserved.</p>
+    </footer>
+
+    <!-- No specific JS needed for this simple About page, but you can add if required -->
+    <!-- <script src="js/main.js"></script> -->
+</body>
+
+</html>

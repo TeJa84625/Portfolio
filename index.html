@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G TEJA</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts - Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- model-viewer component -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+  <!-- Header Section -->
+  <header
+    class="bg-white shadow-md py-4 px-6 md:px-10 lg:px-16 flex justify-between items-center rounded-b-lg sticky top-0 z-50">
+    <div class="flex items-center">
+      <a href="index.html"
+        class="text-2xl font-bold text-gray-800 hover:text-blue-600 transition duration-300 ease-in-out">
+        <span class="text-blue-600">G</span>TEJA
+      </a>
+    </div>
+    <nav>
+      <ul class="flex space-x-4 md:space-x-8">
+        <li><a href="#"
+            class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">Home</a>
+        </li>
+        <li><a href="projects.html"
+            class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">Projects</a>
+        </li>
+        <li><a href="about.html"
+            class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">About</a>
+        </li>
+        <li><a href="contact.html"
+            class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 ease-in-out px-3 py-2 rounded-md">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <main class="flex-grow flex flex-col items-center justify-center p-6 space-y-16 max-w-7xl mx-auto w-full">
+
+    <!-- Hero Section -->
+    <div
+      class="flex flex-col md:flex-row items-center justify-between bg-white p-8 rounded-lg shadow-lg max-w-6xl w-full gap-8">
+      <!-- Left: Text Content -->
+      <div class="text-center md:text-left md:w-1/2">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+          Welcome to My <span class="text-blue-600">Professional Portfolio</span>
+        </h1>
+        <p class="text-lg text-gray-600 mb-6">
+          Showcasing my work, skills, and passion for creating impactful solutions.
+        </p>
+        <a href="projects.html"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+          View My Projects
+        </a>
+      </div>
+
+      <!-- Right: 3D Model Viewer -->
+      <!-- https://modelviewer.dev/shared-assets/models/Astronaut.glb -->
+      <!-- http://teja84625.github.io/3d-models/oversized_t-shirt.glb -->
+      <div class="w-full md:w-1/2 h-72 md:h-96">
+        <model-viewer src="http://teja84625.github.io/3d-models/oversized_t-shirt.glb" 
+          alt="A 3D model of an astronaut"
+          auto-rotate camera-controls shadow-intensity="0" class="w-full h-full rounded-lg"
+          loading="eager" 
+          reveal="auto">
+        </model-viewer>
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section class="bg-white p-8 rounded-lg shadow-lg max-w-6xl w-full">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">My Skills</h2>
+      <div class="flex flex-wrap justify-center gap-6">
+        <div class="bg-blue-100 text-blue-700 font-semibold px-4 py-2 rounded-full">JavaScript</div>
+        <div class="bg-blue-100 text-blue-700 font-semibold px-4 py-2 rounded-full">React</div>
+        <div class="bg-blue-100 text-blue-700 font-semibold px-4 py-2 rounded-full">Tailwind CSS</div>
+        <div class="bg-blue-100 text-blue-700 font-semibold px-4 py-2 rounded-full">3D Modeling</div>
+        <div class="bg-blue-100 text-blue-700 font-semibold px-4 py-2 rounded-full">UX/UI Design</div>
+      </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section class="bg-white p-10 rounded-lg shadow-lg max-w-6xl w-full">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">About Me</h2>
+      <p class="text-gray-700 leading-relaxed max-w-4xl mx-auto text-justify">
+        I am a passionate developer and designer dedicated to crafting digital experiences that make a difference.
+        With over 5 years of experience in frontend development and 3D modeling, I have honed my skills to deliver
+        seamless, responsive, and visually captivating projects. I thrive on solving complex problems creatively and
+        continuously learning new technologies to stay ahead in the fast-paced tech landscape.
+        <br /><br />
+        Beyond coding, I enjoy collaborating with cross-functional teams, translating ideas into reality, and bringing
+        innovative concepts to life. When I’m not coding or designing, you might find me exploring the outdoors, reading
+        about emerging tech trends, or experimenting with new tools and frameworks.
+      </p>
+    
+      <!-- Read More Button -->
+      <div class="text-center mt-6">
+        <a href="about.html"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition duration-300">
+          Read More
+        </a>
+      </div>
+    </section>
+
+
+    <!-- Recent Blog Posts Section -->
+    <!-- <section class="bg-white p-10 rounded-lg shadow-lg max-w-6xl w-full">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Recent Blog Posts</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <article class="border rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-2 text-blue-600">Building Interactive 3D Models for the Web</h3>
+          <p class="text-gray-700 mb-4">Learn how to integrate 3D models using modern web technologies and enhance user
+            engagement.</p>
+          <a href="#" class="text-blue-600 hover:underline font-semibold">Read More →</a>
+        </article>
+        <article class="border rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-2 text-blue-600">Mastering Tailwind CSS for Rapid UI Development</h3>
+          <p class="text-gray-700 mb-4">A comprehensive guide to leveraging Tailwind CSS to build beautiful and
+            responsive interfaces quickly.</p>
+          <a href="#" class="text-blue-600 hover:underline font-semibold">Read More →</a>
+        </article>
+        <article class="border rounded-lg p-6 hover:shadow-lg transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-2 text-blue-600">Optimizing React Apps for Performance</h3>
+          <p class="text-gray-700 mb-4">Tips and best practices to make your React applications faster and more
+            efficient.</p>
+          <a href="#" class="text-blue-600 hover:underline font-semibold">Read More →</a>
+        </article>
+      </div>
+    </section> -->
+
+    <!-- Testimonials Section -->
+    <!-- <section class="bg-white p-10 rounded-lg shadow-lg max-w-6xl w-full">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">What Clients Say</h2>
+      <div class="space-y-8 max-w-5xl mx-auto">
+        <blockquote class="border-l-4 border-blue-600 pl-6 italic text-gray-700">
+          “Working with Teja was a game changer. The 3D model integration in our app exceeded all expectations, and the
+          communication was flawless throughout the project.”
+          <footer class="mt-2 font-semibold text-gray-900">– Alex Johnson, Product Manager</footer> 
+        </blockquote>
+        <blockquote class="border-l-4 border-blue-600 pl-6 italic text-gray-700">
+          “Teja’s expertise in React and UI design helped us launch our product faster with a sleek, user-friendly
+          interface. Highly recommended!”
+          <footer class="mt-2 font-semibold text-gray-900">– Maria Lopez, CEO of Innovatech</footer>
+        </blockquote>
+        <blockquote class="border-l-4 border-blue-600 pl-6 italic text-gray-700">
+          “The attention to detail and creativity brought to our project was outstanding. A true professional and joy to
+          collaborate with.”
+          <footer class="mt-2 font-semibold text-gray-900">– Samuel Kim, Freelance Consultant</footer>
+        </blockquote>
+      </div>
+    </section> -->
+
+    <!-- Contact Call-to-Action Section -->
+    <section class="bg-blue-600 text-white p-12 rounded-lg shadow-lg max-w-6xl w-full text-center">
+      <h2 class="text-4xl font-bold mb-4">Interested in Working Together?</h2>
+      <p class="mb-8 max-w-3xl mx-auto text-lg leading-relaxed">
+        Whether you have a project in mind or just want to say hello, feel free to reach out. I’m always open to
+        exciting opportunities and collaborations.
+      </p>
+      <a href="contact.html"
+        class="inline-block bg-white text-blue-600 font-bold py-4 px-10 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300">
+        Contact Me
+      </a>
+    </section>
+
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="bg-gray-800 text-white text-center py-6 mt-auto rounded-t-lg">
+    <p>&copy; 2025 My Portfolio. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
