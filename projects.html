@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Projects Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <div id="appContainer" class="max-w-4xl mx-auto p-5 hidden">
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4">
+                <a href="About.html">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                        Edit About
+                    </button>
+                </a>
+            </div>
+            <span id="userEmailDisplay" class="text-gray-600 font-medium"></span>
+            <button id="signOutBtn" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md">
+                Sign Out
+            </button>
+        </div>
+
+        <h1 id="pageTitle" class="text-4xl text-blue-700 text-center mb-8">Edit Project</h1>
+
+        <div class="flex justify-center mb-6 gap-4">
+            <button id="addNewProjectButton"
+                class="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg">
+                Add New Project
+            </button>
+            <button id="updateExistingProjectButton"
+                class="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg">
+                Update Existing Project
+            </button>
+        </div>
+
+        <div id="projectListContainer" class="bg-white p-8 rounded-lg shadow-md mb-6 hidden">
+            <h3 class="text-2xl font-semibold mb-4">Existing Projects</h3>
+            <ul id="projectList" class="border border-gray-300 rounded-md max-h-48 overflow-y-auto">
+            </ul>
+        </div>
+
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <form id="projectForm" class="space-y-6">
+                <div>
+                    <label for="projectName" class="block text-lg font-semibold mb-2">Project Name:</label>
+                    <input type="text" id="projectName" placeholder="e.g., My Awesome Project" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+                <div>
+                    <label for="shortDescription" class="block text-lg font-semibold mb-2">Short Description:</label>
+                    <textarea id="shortDescription" rows="3" placeholder="A brief, one-sentence summary."
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900"></textarea>
+                </div>
+                <div>
+                    <label for="longDescription" class="block text-lg font-semibold mb-2">Long Description:</label>
+                    <textarea id="longDescription" rows="6"
+                        placeholder="A detailed description of the project, its purpose, and features."
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900"></textarea>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2">Image URLs:</label>
+                    <div id="imageUrlsContainer">
+                    </div>
+                    <button type="button" id="addImageUrlBtn"
+                        class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-4">Add Image
+                        URL</button>
+                </div>
+                <div>
+                    <label for="videoUrl" class="block text-lg font-semibold mb-2">Video URL:</label>
+                    <input type="url" id="videoUrl" placeholder="e.g., https://www.youtube.com/watch?v=..."
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2">Tags:</label>
+                    <div id="tagsContainer" class="space-y-2"></div>
+                    <button type="button" id="addTagBtn"
+                        class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-4">Add Tag</button>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2">Technologies:</label>
+                    <div id="technologiesContainer" class="space-y-2"></div>
+                    <button type="button" id="addTechnologyBtn"
+                        class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-4">Add
+                        Technology</button>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2">Members:</label>
+                    <div id="membersContainer" class="space-y-2"></div>
+                    <button type="button" id="addMemberBtn"
+                        class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-4">Add Member</button>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2">Sponsors:</label>
+                    <div id="sponsorsContainer" class="space-y-2"></div>
+                    <button type="button" id="addSponsorBtn"
+                        class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-4">Add Sponsor</button>
+                </div>
+                <div>
+                    <label for="projectStatus" class="block text-lg font-semibold mb-2">Project Status:</label>
+                    <select id="projectStatus" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                        <option value="onhold">On Hold</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="difficulty" class="block text-lg font-semibold mb-2">Difficulty:</label>
+                    <select id="difficulty" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="code" class="block text-lg font-semibold mb-2">Code:</label>
+                    <textarea id="code" rows="6" placeholder="Paste your complete code here..."
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900"></textarea>
+                </div>
+                <div>
+                    <label for="buttonLabel" class="block text-lg font-semibold mb-2">Button Label:</label>
+                    <select id="buttonLabel" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                        <option value="None">None</option>
+                        <option value="Download">Download</option>
+                        <option value="Visit Website">Visit Website</option>
+                    </select>
+                </div>
+                <div id="buttonUrlGroup" class="hidden">
+                    <label for="buttonUrl" class="block text-lg font-semibold mb-2">Button URL:</label>
+                    <input type="url" id="buttonUrl" placeholder="e.g., https://www.example.com"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+                <div>
+                    <label for="uploadDate" class="block text-lg font-semibold mb-2">Upload Date:</label>
+                    <input type="date" id="uploadDate"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+                <div>
+                    <label for="lastUpdated" class="block text-lg font-semibold mb-2">Last Updated:</label>
+                    <input type="date" id="lastUpdated"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+                <div>
+                    <label for="views" class="block text-lg font-semibold mb-2">Views:</label>
+                    <input type="number" id="views" value="0"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+                <div id="downloadsGroup" class="hidden">
+                    <label for="downloads" class="block text-lg font-semibold mb-2">Downloads:</label>
+                    <input type="number" id="downloads" value="0"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+
+                <div class="flex items-center gap-4 mt-6">
+                    <button type="submit" id="submitButton"
+                        class="w-full bg-green-500 hover:bg-green-700 text-white px-6 py-3 rounded-md text-xl">
+                        Save Project
+                    </button>
+                    <button type="button" id="deleteProjectButton"
+                        class="bg-red-500 hover:bg-red-700 text-white px-6 py-3 rounded-md text-xl hidden">
+                        Delete
+                    </button>
+                </div>
+            </form>
+            <button id="previewButton"
+                class="w-full bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-xl mt-4">
+                Preview Project
+            </button>
+            <p id="statusMessage" class="mt-6 text-center font-semibold"></p>
+        </div>
+    </div>
+
+    <div id="loginContainer" class="text-center mt-16 hidden">
+        <h2 class="text-2xl font-semibold mb-6">Admin Login</h2>
+        <p>Please log in to manage projects.</p>
+        <button id="signInBtn" class="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg mt-4">
+            Sign In with Google
+        </button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWoqHihUtSWubkoOTzykbxjtuiIFfgDWg",
+            authDomain: "portfolio-baf28.firebaseapp.com",
+            projectId: "portfolio-baf28",
+            storageBucket: "portfolio-baf28.firebasestorage.app",
+            messagingSenderId: "631350351739",
+            appId: "1:631350351739:web:1a1352cc2b9384b5924fde",
+            measurementId: "G-103VQ05CTT"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const projectForm = document.getElementById('projectForm');
+        const projectNameInput = document.getElementById('projectName');
+        const submitButton = document.getElementById('submitButton');
+        const addNewProjectButton = document.getElementById('addNewProjectButton');
+        const updateExistingProjectButton = document.getElementById('updateExistingProjectButton');
+        const deleteProjectButton = document.getElementById('deleteProjectButton');
+        const projectListContainer = document.getElementById('projectListContainer');
+        const projectList = document.getElementById('projectList');
+        const imageUrlsContainer = document.getElementById('imageUrlsContainer');
+        const addImageUrlBtn = document.getElementById('addImageUrlBtn');
+        const tagsContainer = document.getElementById('tagsContainer');
+        const addTagBtn = document.getElementById('addTagBtn');
+        const technologiesContainer = document.getElementById('technologiesContainer');
+        const addTechnologyBtn = document.getElementById('addTechnologyBtn');
+        const membersContainer = document.getElementById('membersContainer');
+        const addMemberBtn = document.getElementById('addMemberBtn');
+        const sponsorsContainer = document.getElementById('sponsorsContainer');
+        const addSponsorBtn = document.getElementById('addSponsorBtn');
+        const buttonLabelSelect = document.getElementById('buttonLabel');
+        const buttonUrlGroup = document.getElementById('buttonUrlGroup');
+        const downloadsGroup = document.getElementById('downloadsGroup');
+        const downloadsInput = document.getElementById('downloads');
+        const viewsInput = document.getElementById('views');
+        const previewButton = document.getElementById('previewButton');
+        const appContainer = document.getElementById('appContainer');
+        const loginContainer = document.getElementById('loginContainer');
+        const signInBtn = document.getElementById('signInBtn');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const pageTitle = document.getElementById('pageTitle');
+        const userEmailDisplay = document.getElementById('userEmailDisplay'); // New
+
+        let currentMode = 'add';
+
+        function createDynamicInput(container, value = '', placeholder = 'Add a new entry') {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex items-center gap-2 entry-wrapper';
+            // Removed maxlength="16" for more flexible input, especially for URLs
+            wrapper.innerHTML = `
+                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900" placeholder="${placeholder}" value="${value}" required>
+                <button type="button" class="bg-red-500 hover:bg-red-700 text-white px-3 py-2 rounded-md remove-btn">Remove</button>
+            `;
+            container.appendChild(wrapper);
+            wrapper.querySelector('.remove-btn').addEventListener('click', () => {
+                wrapper.remove();
+            });
+        }
+
+        function getDynamicValues(container) {
+            const values = [];
+            container.querySelectorAll('input').forEach(input => {
+                const value = input.value.trim();
+                if (value) {
+                    values.push(value);
+                }
+            });
+            return values;
+        }
+
+        function toggleFieldVisibility() {
+            if (buttonLabelSelect.value === 'None') {
+                buttonUrlGroup.classList.add('hidden');
+                document.getElementById('buttonUrl').value = '';
+                downloadsGroup.classList.add('hidden');
+                downloadsInput.value = '0';
+            } else if (buttonLabelSelect.value === 'Download') {
+                buttonUrlGroup.classList.remove('hidden');
+                downloadsGroup.classList.remove('hidden');
+            }
+            else {
+                buttonUrlGroup.classList.remove('hidden');
+                downloadsGroup.classList.add('hidden');
+                downloadsInput.value = '0';
+            }
+        }
+
+        async function setMode(mode) {
+            currentMode = mode;
+            if (mode === 'add') {
+                pageTitle.textContent = 'Add New Project';
+                submitButton.textContent = 'Save Project';
+                projectNameInput.readOnly = false;
+                projectForm.reset();
+                imageUrlsContainer.innerHTML = '';
+                tagsContainer.innerHTML = '';
+                technologiesContainer.innerHTML = '';
+                membersContainer.innerHTML = '';
+                sponsorsContainer.innerHTML = '';
+                deleteProjectButton.classList.add('hidden');
+                projectListContainer.classList.add('hidden');
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}`;
+                document.getElementById('uploadDate').value = formattedDate;
+                document.getElementById('lastUpdated').value = formattedDate;
+                toggleFieldVisibility();
+            } else {
+                pageTitle.textContent = 'Update Existing Project';
+                submitButton.textContent = 'Update Project';
+                projectNameInput.readOnly = true;
+                projectForm.reset();
+                imageUrlsContainer.innerHTML = '';
+                tagsContainer.innerHTML = '';
+                technologiesContainer.innerHTML = '';
+                membersContainer.innerHTML = '';
+                sponsorsContainer.innerHTML = '';
+                deleteProjectButton.classList.remove('hidden');
+                projectListContainer.classList.remove('hidden');
+                await fetchAndDisplayProjectNames();
+                toggleFieldVisibility();
+            }
+        }
+
+        async function fetchAndDisplayProjectNames() {
+            projectList.innerHTML = '<li class="p-2 text-gray-500">Loading projects...</li>';
+            try {
+                const projectsSnapshot = await db.collection("projects").get();
+                if (projectsSnapshot.empty) {
+                    projectList.innerHTML = '<li class="p-2 text-gray-500">No projects found.</li>';
+                    return;
+                }
+                projectList.innerHTML = '';
+                projectsSnapshot.forEach(doc => {
+                    const li = document.createElement('li');
+                    li.textContent = doc.id;
+                    li.className = 'p-2 cursor-pointer border-b border-gray-200 hover:bg-gray-100 last:border-b-0';
+                    li.dataset.projectId = doc.id;
+                    projectList.appendChild(li);
+                });
+            } catch (e) {
+                console.error("Error fetching project names: ", e);
+                projectList.innerHTML = '<li class="p-2 text-red-500">Error loading projects.</li>';
+            }
+        }
+
+        async function loadProjectData(projectName) {
+            if (!projectName) {
+                alert("Please select a Project Name to load its data.");
+                return;
+            }
+            try {
+                const docRef = db.collection("projects").doc(projectName);
+                const doc = await docRef.get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    projectNameInput.value = projectName;
+                    document.getElementById('shortDescription').value = data.short_description || '';
+                    document.getElementById('longDescription').value = data.long_description || '';
+                    document.getElementById('uploadDate').value = data.upload_date || '';
+                    document.getElementById('lastUpdated').value = data.last_updated || '';
+                    document.getElementById('videoUrl').value = data.video_url || '';
+                    document.getElementById('projectStatus').value = data.project_status || 'ongoing';
+                    document.getElementById('difficulty').value = data.difficulty || 'Intermediate';
+                    document.getElementById('code').value = data.code || ''; // Now loads into textarea
+                    document.getElementById('buttonLabel').value = data.button_label || 'None';
+                    document.getElementById('buttonUrl').value = data.button_url || '';
+
+                    imageUrlsContainer.innerHTML = '';
+                    if (data.image_urls && Array.isArray(data.image_urls)) {
+                        data.image_urls.forEach(url => createDynamicInput(imageUrlsContainer, url, 'Image URL'));
+                    }
+
+                    tagsContainer.innerHTML = '';
+                    if (data.tags && Array.isArray(data.tags)) {
+                        data.tags.forEach(tag => createDynamicInput(tagsContainer, tag, 'Tag'));
+                    }
+
+                    technologiesContainer.innerHTML = '';
+                    if (data.technologies && Array.isArray(data.technologies)) {
+                        data.technologies.forEach(tech => createDynamicInput(technologiesContainer, tech, 'Technology'));
+                    }
+
+                    membersContainer.innerHTML = '';
+                    if (data.members && Array.isArray(data.members)) {
+                        data.members.forEach(member => createDynamicInput(membersContainer, member, 'Member'));
+                    }
+
+                    sponsorsContainer.innerHTML = '';
+                    if (data.sponsors && Array.isArray(data.sponsors)) {
+                        data.sponsors.forEach(sponsor => createDynamicInput(sponsorsContainer, sponsor, 'Sponsor'));
+                    }
+
+                    const statsRef = db.collection("statistics").doc(projectName);
+                    const statsDoc = await statsRef.get();
+                    if (statsDoc.exists) {
+                        const statsData = statsDoc.data();
+                        viewsInput.value = statsData.views || 0;
+                        downloadsInput.value = statsData.downloads || 0;
+                    } else {
+                        viewsInput.value = 0;
+                        downloadsInput.value = 0;
+                    }
+
+                    const today = new Date();
+                    const year = today.getFullYear();
+                    const month = String(today.getMonth() + 1).padStart(2, '0');
+                    const day = String(today.getDate()).padStart(2, '0');
+                    const formattedDate = `${year}-${month}-${day}`;
+                    document.getElementById('lastUpdated').value = formattedDate;
+
+                    alert('Project data loaded successfully!');
+                    projectListContainer.classList.add('hidden');
+                    toggleFieldVisibility();
+                } else {
+                    alert('No project found with that name. This should not happen if selected from list.');
+                    projectForm.reset();
+                }
+            } catch (e) {
+                console.error("Error loading document: ", e);
+                alert('Error loading project data. Check the console for more details.');
+            }
+        }
+
+        async function deleteProject(projectName) {
+            if (!projectName || projectNameInput.readOnly === false) {
+                alert("Please select a project from the list to delete.");
+                return;
+            }
+            const confirmationText = prompt(`To confirm the deletion of the project "${projectName}", please enter "DeLeTe"`);
+            if (confirmationText !== "DeLeTe") {
+                alert("Project deletion cancelled. You must enter 'DeLeTe' to confirm.");
+                return;
+            }
+            if (confirm(`Are you sure you want to delete the project "${projectName}"? This action cannot be undone.`)) {
+                try {
+                    await db.collection("projects").doc(projectName).delete();
+                    await db.collection("statistics").doc(projectName).delete();
+                    alert('Project deleted successfully!');
+                    setMode('add');
+                } catch (e) {
+                    console.error("Error deleting document: ", e);
+                    alert('Error deleting project. Check the console for more details.');
+                }
+            }
+        }
+
+
+        // --- Event Listeners ---
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                appContainer.classList.remove('hidden');
+                loginContainer.classList.add('hidden');
+                userEmailDisplay.textContent = user.email; // Display the email
+                setMode('add');
+            } else {
+                appContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+                userEmailDisplay.textContent = ''; // Clear the email
+            }
+        });
+
+        signInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch(error => {
+                console.error("Authentication error:", error);
+                alert("Authentication failed. Please try again.");
+            });
+        });
+
+        signOutBtn.addEventListener('click', () => {
+            auth.signOut().then(() => {
+                alert("You have been signed out.");
+            }).catch(error => {
+                console.error("Sign out error:", error);
+            });
+        });
+
+        addNewProjectButton.addEventListener('click', () => {
+            setMode('add');
+        });
+
+        updateExistingProjectButton.addEventListener('click', () => {
+            setMode('update');
+        });
+
+        projectList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                const projectId = e.target.dataset.projectId;
+                if (projectId) {
+                    loadProjectData(projectId);
+                }
+            }
+        });
+
+        deleteProjectButton.addEventListener('click', () => {
+            const projectName = projectNameInput.value.trim();
+            deleteProject(projectName);
+        });
+
+        buttonLabelSelect.addEventListener('change', toggleFieldVisibility);
+
+        addImageUrlBtn.addEventListener('click', () => createDynamicInput(imageUrlsContainer, '', 'Image URL'));
+        addTagBtn.addEventListener('click', () => createDynamicInput(tagsContainer, '', 'Tag'));
+        addTechnologyBtn.addEventListener('click', () => createDynamicInput(technologiesContainer, '', 'Technology'));
+        addMemberBtn.addEventListener('click', () => createDynamicInput(membersContainer, '', 'Member'));
+        addSponsorBtn.addEventListener('click', () => createDynamicInput(sponsorsContainer, '', 'Sponsor'));
+
+        previewButton.addEventListener('click', () => {
+            const projectName = projectNameInput.value.trim();
+            const shortDescription = document.getElementById('shortDescription').value.trim();
+            const longDescription = document.getElementById('longDescription').value.trim();
+            const codeContent = document.getElementById('code').value.trim(); // Get content from textarea
+
+            if (!projectName) {
+                alert('Please enter a project name.');
+                return;
+            }
+
+            if (!shortDescription) {
+                alert('Please enter a short description.');
+                return;
+            }
+
+            if (!longDescription) {
+                alert('Please enter a long description.');
+                return;
+            }
+            if (!codeContent) {
+                alert('Please enter the project code.');
+                return;
+            }
+
+
+            const projectData = {
+                projectName: projectName,
+                shortDescription: document.getElementById('shortDescription').value.trim(),
+                longDescription: document.getElementById('longDescription').value.trim(),
+                uploadDate: document.getElementById('uploadDate').value,
+                lastUpdated: document.getElementById('lastUpdated').value,
+                views: viewsInput.value,
+                downloads: downloadsInput.value,
+                videoUrl: document.getElementById('videoUrl').value.trim(),
+                imageUrls: getDynamicValues(imageUrlsContainer),
+                tags: getDynamicValues(tagsContainer),
+                technologies: getDynamicValues(technologiesContainer),
+                members: getDynamicValues(membersContainer),
+                sponsors: getDynamicValues(sponsorsContainer),
+                projectStatus: document.getElementById('projectStatus').value,
+                difficulty: document.getElementById('difficulty').value,
+                code: document.getElementById('code').value.trim(), // Use textarea content
+                buttonLabel: buttonLabelSelect.value,
+                buttonUrl: document.getElementById('buttonUrl').value.trim()
+            };
+
+            sessionStorage.setItem('currentProjectPreview', JSON.stringify(projectData));
+            window.open('preview.html', '_blank');
+        });
+
+        projectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert("You must be signed in to save or update projects.");
+                return;
+            }
+
+            const projectName = projectNameInput.value.trim();
+            if (!projectName) {
+                alert("Project Name is required and used as the ID.");
+                return;
+            }
+
+            const confirmationText = prompt(`To confirm the Update of the project "${projectName}", please enter "UpDaTe"`);
+            if (confirmationText !== "UpDaTe") {
+                alert("Project update cancelled. You must enter 'UpDaTe' to confirm.");
+                return;
+            }
+
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+
+            const projectExists = await checkIfProjectExists(projectName);
+            if (projectExists && currentMode === 'add') {
+                alert("A project with this name already exists. Please choose a different name.");
+                return;
+            }
+
+            const projectData = {
+                short_description: document.getElementById('shortDescription').value.trim(),
+                long_description: document.getElementById('longDescription').value.trim(),
+                upload_date: document.getElementById('uploadDate').value,
+                last_updated: formattedDate,
+                video_url: document.getElementById('videoUrl').value.trim(),
+                image_urls: getDynamicValues(imageUrlsContainer),
+                tags: getDynamicValues(tagsContainer),
+                technologies: getDynamicValues(technologiesContainer),
+                members: getDynamicValues(membersContainer),
+                sponsors: getDynamicValues(sponsorsContainer),
+                project_status: document.getElementById('projectStatus').value,
+                difficulty: document.getElementById('difficulty').value,
+                code: document.getElementById('code').value.trim(), // Use textarea content
+                button_label: buttonLabelSelect.value,
+                button_url: document.getElementById('buttonUrl').value.trim()
+            };
+
+            const statisticsData = {
+                views: parseInt(viewsInput.value) || 0,
+                downloads: parseInt(downloadsInput.value) || 0,
+            };
+
+            try {
+                await db.collection("projects").doc(projectName).set(projectData, { merge: true });
+                await db.collection("statistics").doc(projectName).set(statisticsData, { merge: true });
+                alert(`Project ${currentMode === 'add' ? 'saved' : 'updated'} successfully!`);
+                projectForm.reset();
+                setMode('add');
+            } catch (e) {
+                console.error("Error saving/updating document: ", e);
+                alert(`Error ${currentMode === 'add' ? 'saving' : 'updating'} project. Check the console for more details.`);
+            }
+        });
+
+        async function checkIfProjectExists(projectName) {
+            try {
+                const docRef = db.collection("projects").doc(projectName);
+                const doc = await docRef.get();
+                return doc.exists;
+            } catch (e) {
+                console.error("Error checking if project exists: ", e);
+                return false;
+            }
+        }
+    </script>
+</body>
+
+</html>

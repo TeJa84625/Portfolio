@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>About Me Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900 font-sans">
+
+    <div id="appContainer" class="max-w-4xl mx-auto p-5 hidden">
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4">
+                <a href="projects.html">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                        Edit Projects
+                    </button>
+                </a>
+            </div>
+            <span id="userEmailDisplay" class="text-gray-600 font-medium"></span>
+            <button id="signOutBtn" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md">
+                Sign Out
+            </button>
+        </div>
+
+        <h1 id="pageTitle" class="text-4xl text-blue-700 text-center mb-8">Edit About</h1>
+
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <form id="aboutForm">
+                <div class="mb-6">
+                    <label for="profilePhoto" class="block text-lg font-semibold mb-2">Profile Photo URL:</label>
+                    <input type="text" id="profilePhoto" placeholder="Paste image URL here"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+
+                <div class="mb-6">
+                    <label for="email" class="block text-lg font-semibold mb-2">Email:</label>
+                    <input type="email" id="email" placeholder="Enter your email"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+
+                <div class="mb-6">
+                    <label for="upi" class="block text-lg font-semibold mb-2">UPI ID:</label>
+                    <input type="text" id="upi" placeholder="Enter your UPI ID"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+
+                <div class="mb-6">
+                    <label for="resume" class="block text-lg font-semibold mb-2">Resume Url:</label>
+                    <input type="url" id="resume" placeholder="Enter your Resume Url"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+
+                <div class="mb-6">
+                    <label for="form" class="block text-lg font-semibold mb-2">Form Url:</label>
+                    <input type="url" id="form" placeholder="Enter your Form Url"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+
+                <div class="mb-6">
+                    <label for="skills" class="block text-lg font-semibold mb-2">Skills (comma separated):</label>
+                    <input type="text" id="skills" placeholder="e.g., Python, C++, Firebase, Node.js"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-lg font-semibold mb-2">Certifications:</label>
+                    <div id="certificationsContainer" class="space-y-4">
+                    </div>
+                    <button type="button" id="addCertBtn"
+                        class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-4">
+                        Add Certification
+                    </button>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-green-500 hover:bg-green-700 text-white px-6 py-3 rounded-md text-xl mt-6">
+                    Save Changes
+                </button>
+            </form>
+
+            <p id="statusMessage" class="mt-6 text-center font-semibold"></p>
+        </div>
+    </div>
+
+    <div id="loginContainer" class="text-center mt-16 hidden">
+        <h2 class="text-2xl font-semibold mb-6">Admin Login</h2>
+        <p>Please log in with your Google account to access the admin panel.</p>
+        <button id="signInBtn" class="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg mt-4">
+            Sign In with Google
+        </button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWoqHihUtSWubkoOTzykbxjtuiIFfgDWg",
+            authDomain: "portfolio-baf28.firebaseapp.com",
+            databaseURL: "https://portfolio-baf28-default-rtdb.firebaseio.com",
+            projectId: "portfolio-baf28",
+            storageBucket: "portfolio-baf28.firebasestorage.app",
+            messagingSenderId: "631350351739",
+            appId: "1:631350351739:web:1a1352cc2b9384b5924fde",
+            measurementId: "G-103VQ05CTT"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        const aboutForm = document.getElementById('aboutForm');
+        const profilePhotoInput = document.getElementById('profilePhoto');
+        const emailInput = document.getElementById('email');
+        const upiInput = document.getElementById('upi');
+        const resumeInput = document.getElementById('resume');
+        const formInput = document.getElementById('form');
+        const skillsInput = document.getElementById('skills');
+        const certificationsContainer = document.getElementById('certificationsContainer');
+        const addCertBtn = document.getElementById('addCertBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const appContainer = document.getElementById('appContainer');
+        const loginContainer = document.getElementById('loginContainer');
+        const signInBtn = document.getElementById('signInBtn');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const userEmailDisplay = document.getElementById('userEmailDisplay');
+
+        // Listen for authentication state changes
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                appContainer.classList.remove('hidden');
+                loginContainer.classList.add('hidden');
+                userEmailDisplay.textContent = user.email; // Display the email
+                fetchAndPopulateForm(); // Load data after successful login
+            } else {
+                // User is not signed in
+                appContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+                userEmailDisplay.textContent = ''; // Clear the email
+            }
+        });
+
+        // Google Sign-In handler
+        signInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .catch(error => {
+                    console.error("Authentication error:", error);
+                    alert("Authentication failed. Please try again.");
+                });
+        });
+
+        // Sign Out handler
+        signOutBtn.addEventListener('click', () => {
+            auth.signOut().then(() => {
+                alert("You have been signed out.");
+            }).catch(error => {
+                console.error("Sign out error:", error);
+            });
+        });
+
+        // Function to create and add new certification input fields
+        function createCertInput(name = '', imageUrl = '') {
+            const certDiv = document.createElement('div');
+            certDiv.className = 'flex items-center gap-4 mb-4 cert-entry';
+            certDiv.innerHTML = `
+                <input type="text" class="cert-name w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900" placeholder="Certificate Name" value="${name}">
+                <input type="text" class="cert-url w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900" placeholder="Image URL" value="${imageUrl}">
+                <button type="button" class="remove-cert-btn bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md">
+                    Remove
+                </button>
+            `;
+            certificationsContainer.appendChild(certDiv);
+            certDiv.querySelector('.remove-cert-btn').addEventListener('click', () => {
+                certDiv.remove();
+            });
+        }
+
+        addCertBtn.addEventListener('click', () => {
+            createCertInput();
+        });
+
+        // Function to fetch and pre-fill form data
+        async function fetchAndPopulateForm() {
+            statusMessage.textContent = 'Loading data...';
+            const docRef = db.collection('about').doc('teja');
+            try {
+                const doc = await docRef.get();
+                if (doc.exists) {
+                    const data = doc.data();
+
+                    if (data.profile) {
+                        profilePhotoInput.value = data.profile;
+                    }
+                    if (data.email) {
+                        emailInput.value = data.email;
+                    }
+                    if (data.upi) {
+                        upiInput.value = data.upi;
+                    }
+                    if (data.resume) {
+                        resumeInput.value = data.resume;
+                    }
+                    if (data.form) {
+                        formInput.value = data.form;
+                    }
+                    if (data.skills) {
+                        skillsInput.value = data.skills.join(', ');
+                    }
+                    if (data.certifications) {
+                        certificationsContainer.innerHTML = '';
+                        for (const certName in data.certifications) {
+                            createCertInput(certName, data.certifications[certName]);
+                        }
+                    }
+                    statusMessage.textContent = 'Data loaded successfully.';
+                } else {
+                    statusMessage.textContent = "No existing data found. Creating new document on save.";
+                }
+            } catch (error) {
+                console.error("Error loading data:", error);
+                statusMessage.textContent = "Error loading data. Please check your connection.";
+            }
+        }
+
+        // Form submission handler
+        aboutForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Access Denied: You must be signed in to save changes.");
+                return;
+            }
+
+            const confirmationText = prompt(`To confirm the Update of the About, please enter "UpDaTe"`);
+            if (confirmationText !== "UpDaTe") {
+                alert("About update cancelled. You must enter 'UpDaTe' to confirm.");
+                return;
+            }
+
+            statusMessage.textContent = 'Saving changes...';
+
+            const certifications = {};
+            const certEntries = document.querySelectorAll('.cert-entry');
+            certEntries.forEach(entry => {
+                const name = entry.querySelector('.cert-name').value.trim();
+                const url = entry.querySelector('.cert-url').value.trim();
+                if (name && url) {
+                    certifications[name] = url;
+                }
+            });
+
+            const dataToSave = {
+                skills: skillsInput.value.split(',').map(s => s.trim()).filter(s => s),
+                certifications: certifications,
+                profile: profilePhotoInput.value.trim(),
+                email: emailInput.value.trim(),
+                upi: upiInput.value.trim(),
+                resume: resumeInput.value.trim(),
+                form: formInput.value.trim()
+            };
+
+            try {
+                const docRef = db.collection('about').doc('teja');
+                await docRef.set(dataToSave, { merge: true });
+                statusMessage.textContent = "Changes saved successfully! 🎉";
+            } catch (error) {
+                console.error("Error saving data:", error);
+                statusMessage.textContent = "An error occurred. Please try again.";
+            }
+        });
+    </script>
+</body>
+
+</html>

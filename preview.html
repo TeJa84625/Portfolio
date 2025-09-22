@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title id="pageTitle">Project Details Preview</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 0.5rem;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        pre {
+            background-color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: monospace;
+        }
+
+        .image-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .image-gallery-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .image-gallery-grid img:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <main class="flex-grow p-6 md:p-10 lg:p-16">
+        <div class="main-content-wrapper bg-white p-6 rounded-lg shadow-lg">
+            <h1 id="previewProjectName" class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 capitalize">
+                Loading Project...
+            </h1>
+
+            <p id="previewShortDescription" class="text-gray-600 text-lg mb-6"></p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="text-sm font-semibold text-blue-700">UPLOADED</p>
+                    <p id="previewUploadDate" class="text-gray-800 text-lg"></p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <p class="text-sm font-semibold text-green-700">LAST UPDATED</p>
+                    <p id="previewLastUpdated" class="text-gray-800 text-lg"></p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <p class="text-sm font-semibold text-purple-700">STATUS</p>
+                    <p id="previewProjectStatus" class="text-gray-800 text-lg capitalize"></p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <p class="text-sm font-semibold text-yellow-700">VIEWS</p>
+                    <p id="previewViews" class="text-gray-800 text-lg"></p>
+                </div>
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <p class="text-sm font-semibold text-red-700">DOWNLOADS</p>
+                    <p id="previewDownloads" class="text-gray-800 text-lg"></p>
+                </div>
+                <div class="bg-indigo-50 p-4 rounded-lg">
+                    <p class="text-sm font-semibold text-indigo-700">DIFFICULTY</p>
+                    <p id="previewDifficulty" class="text-gray-800 text-lg"></p>
+                </div>
+            </div>
+
+            <section id="longDescriptionSection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Description</h2>
+                <p id="previewLongDescription" class="text-gray-700 leading-relaxed"></p>
+            </section>
+
+            <section id="videoSection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Project Video</h2>
+                <div class="video-container">
+                    <iframe id="previewVideoUrl" src="" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen class="rounded-lg"></iframe>
+                </div>
+            </section>
+
+            <section id="imageGallerySection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Project Screenshots/Images</h2>
+                <div id="previewImageGallery" class="image-gallery-grid">
+                </div>
+            </section>
+
+            <section id="technologiesSection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Technologies Used</h2>
+                <div id="previewTechnologies" class="flex flex-wrap gap-2">
+                </div>
+            </section>
+
+            <section id="tagsSection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Tags</h2>
+                <div id="previewTags" class="flex flex-wrap gap-2">
+                </div>
+            </section>
+
+            <section id="membersSection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Team Members</h2>
+                <ul id="previewMembers" class="list-disc list-inside text-gray-700">
+                </ul>
+            </section>
+
+            <section id="sponsorsSection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Sponsors</h2>
+                <ul id="previewSponsors" class="list-disc list-inside text-gray-700">
+                </ul>
+            </section>
+
+            <section id="codeSection" class="mb-8 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Code Snippet</h2>
+                <pre><code id="previewCode" class="language-javascript"></code></pre>
+            </section>
+
+            <div id="buttonLinkContainer" class="text-center mt-8 hidden">
+                <a id="previewButtonLink" href="#" target="_blank"
+                    class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out">
+                    <span id="previewButtonLabel"></span>
+                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectDataString = sessionStorage.getItem('currentProjectPreview');
+            if (!projectDataString) {
+                console.error('No project data found in sessionStorage.');
+                document.getElementById('previewProjectName').textContent = 'Error: No project data to display.';
+                return;
+            }
+
+            let projectData;
+            try {
+                projectData = JSON.parse(projectDataString);
+            } catch (e) {
+                console.error('Failed to parse project data from sessionStorage:', e);
+                document.getElementById('previewProjectName').textContent = 'Error: Invalid project data.';
+                return;
+            }
+
+            // Set the page title
+            document.getElementById('pageTitle').textContent = `Preview: ${projectData.projectName || 'Untitled Project'}`;
+
+            // Populate main details
+            document.getElementById('previewProjectName').textContent = projectData.projectName || 'Untitled Project';
+            document.getElementById('previewShortDescription').textContent = projectData.shortDescription || '';
+            document.getElementById('previewUploadDate').textContent = projectData.uploadDate || 'N/A';
+            document.getElementById('previewLastUpdated').textContent = projectData.lastUpdated || 'N/A';
+            document.getElementById('previewViews').textContent = projectData.views || '0';
+            document.getElementById('previewDownloads').textContent = projectData.downloads || '0';
+            document.getElementById('previewProjectStatus').textContent = projectData.projectStatus || 'N/A';
+            document.getElementById('previewDifficulty').textContent = projectData.difficulty || 'N/A';
+
+            // Populate conditional sections
+            if (projectData.longDescription) {
+                document.getElementById('longDescriptionSection').classList.remove('hidden');
+                document.getElementById('previewLongDescription').innerHTML = projectData.longDescription;
+            }
+
+            if (projectData.videoUrl) {
+                document.getElementById('videoSection').classList.remove('hidden');
+                const embedUrl = projectData.videoUrl.replace("watch?v=", "embed/").split('&')[0];
+                document.getElementById('previewVideoUrl').src = embedUrl;
+            }
+
+            if (projectData.imageUrls && projectData.imageUrls.length > 0) {
+                document.getElementById('imageGallerySection').classList.remove('hidden');
+                const imageGalleryDiv = document.getElementById('previewImageGallery');
+                imageGalleryDiv.innerHTML = ''; // Clear existing content
+                projectData.imageUrls.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = 'Project Screenshot';
+                    img.classList.add('rounded-lg', 'shadow-md');
+                    imageGalleryDiv.appendChild(img);
+                });
+            }
+
+            if (projectData.technologies && projectData.technologies.length > 0) {
+                document.getElementById('technologiesSection').classList.remove('hidden');
+                const technologiesDiv = document.getElementById('previewTechnologies');
+                technologiesDiv.innerHTML = '';
+                projectData.technologies.forEach(tech => {
+                    const span = document.createElement('span');
+                    span.classList.add('bg-gray-200', 'text-gray-800', 'px-3', 'py-1', 'rounded-full', 'text-sm', 'font-medium');
+                    span.textContent = tech;
+                    technologiesDiv.appendChild(span);
+                });
+            }
+
+            if (projectData.tags && projectData.tags.length > 0) {
+                document.getElementById('tagsSection').classList.remove('hidden');
+                const tagsDiv = document.getElementById('previewTags');
+                tagsDiv.innerHTML = '';
+                projectData.tags.forEach(tag => {
+                    const span = document.createElement('span');
+                    span.classList.add('bg-blue-100', 'text-blue-800', 'px-3', 'py-1', 'rounded-full', 'text-sm', 'font-medium');
+                    span.textContent = tag;
+                    tagsDiv.appendChild(span);
+                });
+            }
+
+            if (projectData.members && projectData.members.length > 0) {
+                document.getElementById('membersSection').classList.remove('hidden');
+                const membersList = document.getElementById('previewMembers');
+                membersList.innerHTML = '';
+                projectData.members.forEach(member => {
+                    const li = document.createElement('li');
+                    li.textContent = member;
+                    membersList.appendChild(li);
+                });
+            }
+
+            if (projectData.sponsors && projectData.sponsors.length > 0) {
+                document.getElementById('sponsorsSection').classList.remove('hidden');
+                const sponsorsList = document.getElementById('previewSponsors');
+                sponsorsList.innerHTML = '';
+                projectData.sponsors.forEach(sponsor => {
+                    const li = document.createElement('li');
+                    li.textContent = sponsor;
+                    sponsorsList.appendChild(li);
+                });
+            }
+
+            if (projectData.code) {
+                document.getElementById('codeSection').classList.remove('hidden');
+                const escapedCode = projectData.code
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+                document.getElementById('previewCode').textContent = escapedCode;
+            }
+
+            if (projectData.buttonUrl && projectData.buttonLabel && projectData.buttonLabel !== 'None') {
+                document.getElementById('buttonLinkContainer').classList.remove('hidden');
+                document.getElementById('previewButtonLink').href = projectData.buttonUrl;
+                document.getElementById('previewButtonLabel').textContent = projectData.buttonLabel;
+            }
+        });
+    </script>
+</body>
+
+</html>
