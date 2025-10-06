@@ -10,14 +10,17 @@
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div id="appContainer" class="max-w-4xl mx-auto p-5 hidden">
         <div class="flex justify-between items-center mb-6">
-            <div class="flex items-center gap-4">
+            <!-- <div class="flex items-center gap-4">
                 <a href="about.html">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
                         Edit About
                     </button>
                 </a>
+            </div> -->
+            <div class="flex items-center gap-4">
+                <h3><b>User:</b></h3>
+                <span id="userEmailDisplay" class="text-gray-600 font-medium"></span>
             </div>
-            <span id="userEmailDisplay" class="text-gray-600 font-medium"></span>
             <button id="signOutBtn" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md">
                 Sign Out
             </button>
@@ -263,9 +266,17 @@
                 document.getElementById('buttonUrl').value = '';
                 downloadsGroup.classList.add('hidden');
                 downloadsInput.value = '0';
-            } else if (buttonLabelSelect.value === 'Download') {
+            } else if (buttonLabelSelect.value === 'Download' || buttonLabelSelect.value === 'Visit Website') {
+                let label;
                 buttonUrlGroup.classList.remove('hidden');
                 downloadsGroup.classList.remove('hidden');
+                if (buttonLabelSelect.value === 'Visit Website'){
+                    label = "Website Visits:";
+                } else {
+                    label = "Downloads:";
+                }
+                document.querySelector('label[for="downloads"]').textContent = label;
+
             }
             else {
                 buttonUrlGroup.classList.remove('hidden');
